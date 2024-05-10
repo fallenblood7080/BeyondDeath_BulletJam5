@@ -1,3 +1,4 @@
+using BulletJam.Helper;
 using UnityEngine;
 using UnitySingleton;
 

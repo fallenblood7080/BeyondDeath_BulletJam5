@@ -12,3 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc65e0ded22a3274fb5539572cc9ac01, type: 3}
   m_Name: LoggerSettings
   m_EditorClassIdentifier: 
+  <Datas>k__BackingField:
+  - group: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+    fontSize: 14
+  - group: 1
+    color: {r: 0, g: 0.707391, b: 1, a: 1}
+    fontSize: 15
+  - group: 2
+    color: {r: 1, g: 0.4337424, b: 0, a: 1}
+    fontSize: 15
+  - group: 3
+    color: {r: 1, g: 0.9345746, b: 0, a: 1}
+    fontSize: 16
