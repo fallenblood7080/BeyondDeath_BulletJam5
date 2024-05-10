@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace BulletJam
+{
+    public class #SCRIPTNAME# : MonoBehaviour
+    {
+        #region Variables
+
+        private static List<#SCRIPTNAME#> list = new List<#SCRIPTNAME#>();
+        public static List<#SCRIPTNAME#> List { get { return list; } }
+
+        #endregion
+
+        #region Unity Methods
+
+        public void OnEnable()
+        {
+            list.Add(this);
+        }
+
+        public void Start()
+        {
+        
+        }
+
+        public void Update()
+        {
+        
+        }
+
+        public void OnDisable()
+        {
+            list.Remove(this);
+        }
+
+        #endregion
+
+        #region Methods
+
+        #endregion
+    }
+}
