@@ -9,6 +9,7 @@ namespace BulletJam.Core
     public class GameManager : PersistentMonoSingleton<GameManager>
     {
         [field: SerializeField, Disable] public SceneContainerScriptable SceneContainer { get; private set; }
+        [field: SerializeField, Disable] public Pooler.PoolSettings PoolSetting { get; private set; }
 
         protected override void Awake()
         {
@@ -28,6 +29,8 @@ namespace BulletJam.Core
 
             yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/SceneContainer",
                 (data) => SceneContainer = data as SceneContainerScriptable));
+            yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/PoolSettings",
+                (data) => PoolSetting = data as Pooler.PoolSettings));
         }
     }
 }

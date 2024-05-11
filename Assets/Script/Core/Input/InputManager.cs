@@ -10,6 +10,7 @@ namespace BulletJam.Core.Input
 
         [field: SerializeField] public Vector2 MoveInputs { get; private set; }
         [field: SerializeField] public Vector2 LookInputs { get; private set; }
+        [field: SerializeField] public bool IsFiring { get; private set; }
 
         protected override void Awake()
         {
@@ -40,6 +41,7 @@ namespace BulletJam.Core.Input
 
             MoveInputs = inputActions.Player.Move.ReadValue<Vector2>();
             LookInputs = inputActions.Player.Look.ReadValue<Vector2>();
+            IsFiring = System.Convert.ToBoolean(inputActions.Player.Fire.ReadValue<float>());
         }
 
         public void EnablePlayerInputs() => inputActions.Player.Enable();
