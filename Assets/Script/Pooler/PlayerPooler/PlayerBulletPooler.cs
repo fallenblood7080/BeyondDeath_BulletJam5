@@ -42,7 +42,7 @@ namespace BulletJam.Pooler
         public void Get(float force, float dmg, Vector2 dir, Vector2 pos)
         {
             var bullet = BulletPool.Get();
-            bullet.transform.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg));
+            bullet.transform.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg)));
             bullet.Init(force, dmg, dir, BulletPool);
         }
 

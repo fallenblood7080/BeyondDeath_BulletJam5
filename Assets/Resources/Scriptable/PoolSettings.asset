@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <datas>k__BackingField:
   - PoolName: PlayerBullet
-    PooledObject: {fileID: 3432719089684708615, guid: 5b21d0cb51bfe524eb81d7e6c603ad21, type: 3}
+    PooledObject: {fileID: 7599970473688057739, guid: 5b21d0cb51bfe524eb81d7e6c603ad21, type: 3}
     Size: 200
     MaxSize: 1000

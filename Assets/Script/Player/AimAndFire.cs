@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 namespace BulletJam.Player
 {
+    using BulletJam.Helper;
     using BulletJam.Pooler;
     using Core.Input;
-    using UnityEngine.Rendering.Universal;
 
     public class AimAndFire : MonoBehaviour
     {
@@ -14,6 +16,7 @@ namespace BulletJam.Player
         [SerializeField, NotNull] private Transform[] firingPoint;
         [SerializeField, NotNull] private SpriteRenderer gunSpriteRenderer;
         [SerializeField, NotNull] private Light2D weaponHeatEffectLight;
+        [SerializeField] private Image heatUI;
         [SerializeField] private float offset;
         [SerializeField, BeginGroup("Weapon")] private float bulletForce;
         [SerializeField] private float bulletDamage;
@@ -73,6 +76,7 @@ namespace BulletJam.Player
             }
 
             weaponHeatEffectLight.intensity = weaponCurrentHeat;
+            heatUI.fillAmount = weaponCurrentHeat / weaponMaxHeat;
 
             if (weaponCurrentHeat > weaponMaxHeat)
             {
@@ -82,6 +86,7 @@ namespace BulletJam.Player
 
         private void Fire(Vector2 dir)
         {
+            CameraShake.instance.Shake(1f, 0.1f, 2f);
             PlayerBulletPooler.Instance.Get(bulletForce, bulletDamage, dir, firingPoint[Random.Range(minInclusive: 0, maxExclusive: firingPoint.Length)].position);
             weaponCurrentHeat += Time.deltaTime * weaponHeatBuildUpMultiplier;
         }
