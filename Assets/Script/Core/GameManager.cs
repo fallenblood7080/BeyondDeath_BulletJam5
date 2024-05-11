@@ -31,6 +31,8 @@ namespace BulletJam.Core
                 (data) => SceneContainer = data as SceneContainerScriptable));
             yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/PoolSettings",
                 (data) => PoolSetting = data as Pooler.PoolSettings));
+
+            yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.GameLevelScenes[0]));
         }
     }
 }

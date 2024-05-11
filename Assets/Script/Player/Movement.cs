@@ -15,6 +15,8 @@ namespace BulletJam.Player
 
         [SerializeField] private float moveSpeed;
 
+        [SerializeField] private Animator animator;
+
         private void Awake()
         {
             body = GetComponent<Rigidbody2D>();
@@ -24,6 +26,7 @@ namespace BulletJam.Player
         private void Update()
         {
             dir = InputManager.Instance.MoveInputs;
+            animator.SetBool("IsMove", dir.sqrMagnitude > 0.1f);
         }
 
         private void FixedUpdate()

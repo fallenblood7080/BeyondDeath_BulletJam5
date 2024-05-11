@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BulletJam.Helper
 {
@@ -16,6 +17,15 @@ namespace BulletJam.Helper
             if (request.asset != null)
             {
                 callback?.Invoke(request.asset);
+            }
+        }
+
+        public static IEnumerator LoadGameScene(string name)
+        {
+            AsyncOperation operation = SceneManager.LoadSceneAsync(name);
+            while (!operation.isDone)
+            {
+                yield return null;
             }
         }
 
