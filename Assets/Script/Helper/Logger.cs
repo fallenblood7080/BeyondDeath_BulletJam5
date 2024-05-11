@@ -10,12 +10,9 @@ namespace BulletJam.Helper
     {
         private LoggerSettings settings;
 
-        protected override void Awake()
+        public IEnumerator LoadLogSettings()
         {
-            base.Awake();
-#if UNITY_EDITOR
-            StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/LoggerSettings", (data) => settings = data as LoggerSettings));
-#endif
+            yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/LoggerSettings", (data) => settings = data as LoggerSettings));
         }
 
         public void Log(object msg, LogGroup group = LogGroup.None, UnityEngine.Object caller = null)
