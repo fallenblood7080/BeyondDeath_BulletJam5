@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace BulletJam.Player
 {
+    using BulletJam.Core;
     using BulletJam.Helper;
     using BulletJam.Pooler;
     using Core.Input;
@@ -87,7 +88,7 @@ namespace BulletJam.Player
         private void Fire(Vector2 dir)
         {
             CameraShake.instance.Shake(1f, 0.1f, 2f);
-            PlayerBulletPooler.Instance.Get(bulletForce, bulletDamage, dir, firingPoint[Random.Range(minInclusive: 0, maxExclusive: firingPoint.Length)].position);
+            PlayerBulletPooler.Instance.Get(bulletForce, bulletDamage, dir.normalized, firingPoint[Random.Range(minInclusive: 0, maxExclusive: firingPoint.Length)].position);
             weaponCurrentHeat += Time.deltaTime * weaponHeatBuildUpMultiplier;
         }
     }

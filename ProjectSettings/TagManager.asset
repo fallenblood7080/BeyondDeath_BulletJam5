@@ -38,9 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 1176419371
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Player
     uniqueID: 2383643063
+    locked: 0
+  - name: Particle
+    uniqueID: 4277781069
+    locked: 0
+  - name: UI
+    uniqueID: 1468488623
     locked: 0
