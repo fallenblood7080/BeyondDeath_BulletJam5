@@ -22,6 +22,8 @@ namespace BulletJam.Enemy
         [SerializeField] private Transform attackPoint;
 
         [SerializeField] private Transform[] bossPoints;
+        [SerializeField] private SpriteRenderer[] bodyParts;
+        [SerializeField] private ParticleSystem particle;
 
         [Space(5f)]
         [SerializeField] private GameObject gfx;
@@ -53,7 +55,7 @@ namespace BulletJam.Enemy
         {
             LeanTween.alphaCanvas(canvasGroup, 1, 0.5f).setEaseInCirc().setOnComplete(() =>
             {
-                //bossCollider.enabled = true;
+                bossCollider.enabled = true;
                 isBossActive = true;
             });
         }
@@ -87,23 +89,23 @@ namespace BulletJam.Enemy
                     break;
 
                 case 1:
-                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 16, 1, offset: Random.Range(0, 16)));
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1, offset: Random.Range(0, 16)));
                     break;
 
                 case 2:
-                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 8, 1f, 0.2f, Random.Range(0, 8)));
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, 0.2f, Random.Range(0, 8)));
                     break;
 
                 case 3:
-                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 16, 1f, offset: Random.Range(0, 16)));
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, offset: Random.Range(0, 16)));
                     break;
 
                 case 4:
-                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, 0.1f, offset: Random.Range(0, 32)));
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, 0.1f, offset: Random.Range(0, 32)));
                     break;
 
                 case 5:
-                    yield return StartCoroutine(AttackPattern.AstroidPattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, offset: Random.Range(0, 32)));
+                    yield return StartCoroutine(AttackPattern.AstroidPattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, offset: Random.Range(0, 32)));
                     break;
             }
             isAttacking = false;
@@ -116,14 +118,45 @@ namespace BulletJam.Enemy
             {
                 randomIndex = Random.Range(minInclusive: 0, maxExclusive: bossPoints.Length);
             }
-
+            if (!particle.isPlaying)
+            {
+                particle.Play();
+            }
+            yield return new WaitForSeconds(1);
             currentBossPointIndex = randomIndex;
             bossCollider.enabled = false;
-            gfx.SetActive(false);
+            HideBody();
             yield return new WaitForSeconds(1f);
             transform.position = bossPoints[currentBossPointIndex].position;
+            if (!particle.isPlaying)
+            {
+                particle.Play();
+            }
+            yield return new WaitForSeconds(1f);
             bossCollider.enabled = true;
-            gfx.SetActive(true);
+            ShowBody();
+        }
+
+        private void HideBody()
+        {
+            foreach (var part in bodyParts)
+            {
+                LeanTween.value(1, 0, 0.4f).setOnUpdate((float val) =>
+                {
+                    part.color = new Color(1, 1, 1, val);
+                });
+            }
+        }
+
+        private void ShowBody()
+        {
+            foreach (var part in bodyParts)
+            {
+                LeanTween.value(0, 1, 0.4f).setOnUpdate((float val) =>
+                {
+                    part.color = new Color(1, 1, 1, val);
+                });
+            }
         }
     }
 }
