@@ -17,3 +17,7 @@ MonoBehaviour:
     PooledObject: {fileID: 7599970473688057739, guid: 5b21d0cb51bfe524eb81d7e6c603ad21, type: 3}
     Size: 200
     MaxSize: 1000
+  - PoolName: EnemyBullet
+    PooledObject: {fileID: 7599970473688057739, guid: fd5e54ace7630834291cb2d39b6c710b, type: 3}
+    Size: 200
+    MaxSize: 2000

@@ -15,7 +15,7 @@ namespace BulletJam
                 float x = Mathf.Sin(angle * i) * radius;
                 float y = Mathf.Cos(angle * i) * radius;
                 yield return new WaitForSeconds(eachBulletDelay);
-                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                EnemyBulletPooler.Instance.Get(force, dmg, (new Vector2(x + center.x, y + center.y) - center).normalized, new Vector2(x + center.x, y + center.y));
             }
         }
 
@@ -28,7 +28,7 @@ namespace BulletJam
                 float x = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
                 float y = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
                 yield return new WaitForSeconds(eachBulletDelay);
-                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                EnemyBulletPooler.Instance.Get(force, dmg, (new Vector2(x + center.x, y + center.y) - center).normalized, new Vector2(x + center.x, y + center.y));
                 angle += angleIncrement;
             }
         }
@@ -42,7 +42,7 @@ namespace BulletJam
                 float y = Mathf.Pow(Mathf.Cos(angle * i), 3) * radius;
 
                 yield return new WaitForSeconds(eachBulletDelay);
-                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                EnemyBulletPooler.Instance.Get(force, dmg, (new Vector2(x + center.x, y + center.y) - center).normalized, new Vector2(x + center.x, y + center.y));
             }
         }
 
@@ -55,7 +55,7 @@ namespace BulletJam
                 float y = Mathf.Cos(angle * i) * Mathf.Sin(angle * i * 4) * radius;
 
                 yield return new WaitForSeconds(eachBulletDelay);
-                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                EnemyBulletPooler.Instance.Get(force, dmg, (new Vector2(x + center.x, y + center.y) - center).normalized, new Vector2(x + center.x, y + center.y));
             }
         }
 
@@ -68,7 +68,7 @@ namespace BulletJam
                 float y = (2 * Mathf.Cos(angle * i) - 5 * Mathf.Cos(2 * (angle * i) / 3)) * radius;
 
                 yield return new WaitForSeconds(eachBulletDelay);
-                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                EnemyBulletPooler.Instance.Get(force, dmg, (new Vector2(x + center.x, y + center.y) - center).normalized, new Vector2(x + center.x, y + center.y));
             }
         }
     }

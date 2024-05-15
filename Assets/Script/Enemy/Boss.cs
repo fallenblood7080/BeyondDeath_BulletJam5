@@ -11,6 +11,7 @@ namespace BulletJam.Enemy
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private float maxHealth = 1000;
         [SerializeField] private Slider healthBar;
+        [SerializeField] private float force, dmg;
 
         [Space(5f)]
         [SerializeField] private float minAttackInterval;
@@ -18,7 +19,12 @@ namespace BulletJam.Enemy
         [SerializeField] private float maxAttackInterval;
 
         [Space(5f)]
+        [SerializeField] private Transform attackPoint;
+
         [SerializeField] private Transform[] bossPoints;
+
+        [Space(5f)]
+        [SerializeField] private GameObject gfx;
 
         private int currentBossPointIndex;
 
@@ -47,7 +53,7 @@ namespace BulletJam.Enemy
         {
             LeanTween.alphaCanvas(canvasGroup, 1, 0.5f).setEaseInCirc().setOnComplete(() =>
             {
-                bossCollider.enabled = true;
+                //bossCollider.enabled = true;
                 isBossActive = true;
             });
         }
@@ -73,7 +79,33 @@ namespace BulletJam.Enemy
         private IEnumerator Attack()
         {
             isAttacking = true;
-            yield return StartCoroutine(SwitchPlace());
+            int attackRandomIndex = (int)Random.Range(minInclusive: 0, maxInclusive: 5);
+            switch (attackRandomIndex)
+            {
+                case 0:
+                    yield return StartCoroutine(SwitchPlace());
+                    break;
+
+                case 1:
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 16, 1, offset: Random.Range(0, 16)));
+                    break;
+
+                case 2:
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 8, 1f, 0.2f, Random.Range(0, 8)));
+                    break;
+
+                case 3:
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 16, 1f, offset: Random.Range(0, 16)));
+                    break;
+
+                case 4:
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, 0.1f, offset: Random.Range(0, 32)));
+                    break;
+
+                case 5:
+                    yield return StartCoroutine(AttackPattern.AstroidPattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, offset: Random.Range(0, 32)));
+                    break;
+            }
             isAttacking = false;
         }
 
@@ -87,11 +119,11 @@ namespace BulletJam.Enemy
 
             currentBossPointIndex = randomIndex;
             bossCollider.enabled = false;
-            transform.GetChild(0).gameObject.SetActive(false);
+            gfx.SetActive(false);
             yield return new WaitForSeconds(1f);
             transform.position = bossPoints[currentBossPointIndex].position;
             bossCollider.enabled = true;
-            transform.GetChild(0).gameObject.SetActive(true);
+            gfx.SetActive(true);
         }
     }
 }

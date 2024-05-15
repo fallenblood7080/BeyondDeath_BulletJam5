@@ -15,4 +15,4 @@ MonoBehaviour:
   <SplashScene>k__BackingField: SplashScreen
   <MainMenuScene>k__BackingField: MainMenu
   <GameLevelScenes>k__BackingField:
-  - SampleScene
+  - Boss
