@@ -23,6 +23,10 @@ namespace BulletJam
             yield return StartCoroutine(AttackPattern.Hypotrochoid(transform.position, 7f, 20f, 100, 0.5f, 0.0f, 10));
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(AttackPattern.Hypotrochoid(transform.position, 7f, 20f, 100, 0.5f, 0.2f));
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(AttackPattern.ArcPattern(transform.position, -90f, 90f, 7f, 20f, 100, 0.5f, 0.0f));
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(AttackPattern.ArcPattern(transform.position, 90f, -90f, 7f, 20f, 100, 0.5f, 0.2f));
         }
     }
 }

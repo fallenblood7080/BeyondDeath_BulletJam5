@@ -13,9 +13,23 @@ namespace BulletJam
             for (int i = 0 + offset; i < bulletCount + offset; i++)
             {
                 float x = Mathf.Sin(angle * i) * radius;
-                float y = Mathf.Cos(angle * i) + radius;
+                float y = Mathf.Cos(angle * i) * radius;
                 yield return new WaitForSeconds(eachBulletDelay);
                 PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+            }
+        }
+
+        public static IEnumerator ArcPattern(Vector2 center, float startAngle, float endAngle, float force, float dmg, float bulletCount, float radius = 0.5f, float eachBulletDelay = 0f)
+        {
+            float angleIncrement = (endAngle - startAngle) / bulletCount;
+            float angle = startAngle;
+            for (int i = 0; i < bulletCount; i++)
+            {
+                float x = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+                float y = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+                yield return new WaitForSeconds(eachBulletDelay);
+                PlayerBulletPooler.Instance.Get(force, dmg, (new Vector2(x, y) - center).normalized, new Vector2(x, y));
+                angle += angleIncrement;
             }
         }
 
