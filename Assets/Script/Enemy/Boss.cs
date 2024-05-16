@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BulletJam.Enemy
 {
-    public class Boss : MonoBehaviour
+    public class Boss : MonoBehaviour, IDamageable
     {
         [SerializeField] private GameObject bossCam;
         [SerializeField] private CanvasGroup canvasGroup;
@@ -81,7 +81,7 @@ namespace BulletJam.Enemy
         private IEnumerator Attack()
         {
             isAttacking = true;
-            int attackRandomIndex = (int)Random.Range(minInclusive: 0, maxInclusive: 5);
+            int attackRandomIndex = (int)Random.Range(minInclusive: 0, maxInclusive: 7);
             switch (attackRandomIndex)
             {
                 case 0:
@@ -93,7 +93,7 @@ namespace BulletJam.Enemy
                     break;
 
                 case 2:
-                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, 0.2f, Random.Range(0, 8)));
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, 0.2f, Random.Range(0, 64)));
                     break;
 
                 case 3:
@@ -106,6 +106,18 @@ namespace BulletJam.Enemy
 
                 case 5:
                     yield return StartCoroutine(AttackPattern.AstroidPattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, offset: Random.Range(0, 32)));
+                    break;
+
+                case 6:
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 64, 1f, 0f, Random.Range(0, 64)));
+                    yield return new WaitForSeconds(0.5f);
+                    yield return StartCoroutine(AttackPattern.CirclePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1, offset: Random.Range(0, 32)));
+                    break;
+
+                case 7:
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 16, 1f, offset: Random.Range(0, 32)));
+                    yield return new WaitForSeconds(0.5f);
+                    yield return StartCoroutine(AttackPattern.RosePattern(attackPoint.localToWorldMatrix.GetPosition(), force, dmg, 32, 1f, offset: Random.Range(0, 16)));
                     break;
             }
             isAttacking = false;
@@ -157,6 +169,12 @@ namespace BulletJam.Enemy
                     part.color = new Color(1, 1, 1, val);
                 });
             }
+        }
+
+        public void Damage(float damage)
+        {
+            currentHealth -= damage;
+            healthBar.value = currentHealth;
         }
     }
 }

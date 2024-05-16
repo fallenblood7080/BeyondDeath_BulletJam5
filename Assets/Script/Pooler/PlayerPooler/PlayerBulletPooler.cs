@@ -68,7 +68,10 @@ namespace BulletJam.Pooler
 
         private void OnDestroyBullet(PlayerBullet bullet)
         {
-            Destroy(bullet.gameObject);
+            if (bullet != null)
+            {
+                Destroy(bullet.gameObject);
+            }
         }
     }
 }

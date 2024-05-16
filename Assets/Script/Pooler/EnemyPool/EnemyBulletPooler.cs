@@ -46,11 +46,6 @@ namespace BulletJam.Pooler
             bullet.Init(force, dmg, dir, BulletPool);
         }
 
-        private void OnDestroy()
-        {
-            BulletPool.Clear();
-        }
-
         private EnemyBullet CreateBulletPool()
         {
             return Instantiate(bullets);
@@ -68,7 +63,10 @@ namespace BulletJam.Pooler
 
         private void OnDestroyBullet(EnemyBullet bullet)
         {
-            Destroy(bullet.gameObject);
+            if (bullet != null)
+            {
+                Destroy(bullet.gameObject);
+            }
         }
     }
 }

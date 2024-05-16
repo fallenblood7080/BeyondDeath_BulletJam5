@@ -28,6 +28,8 @@ namespace BulletJam.Player
         [SerializeField] private float weaponCoolMultiplier;
         [SerializeField, EndGroup] private float fireRate;
 
+        private PlayerHealth health;
+
         private float currentWeaponCooldown;
         private Camera cam;
 
@@ -82,6 +84,7 @@ namespace BulletJam.Player
             if (weaponCurrentHeat > weaponMaxHeat)
             {
                 weaponCurrentHeat = weaponMaxHeat;
+                health.Damage(5f);
             }
         }
 
