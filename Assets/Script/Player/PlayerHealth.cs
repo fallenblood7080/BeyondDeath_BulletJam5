@@ -1,3 +1,4 @@
+using BulletJam.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +10,36 @@ namespace BulletJam
     {
         [SerializeField] private float maxHealth;
         [SerializeField] private Slider healthbar;
-
+        [SerializeField] private GameObject gameOver;
         private float health;
 
         private void Start()
         {
             health = maxHealth;
-            healthbar.value = health;
-            healthbar.maxValue = maxHealth;
+            if (healthbar != null)
+            {
+                healthbar.value = health;
+                healthbar.maxValue = maxHealth;
+            }
         }
 
         public void Damage(float damage)
         {
             health -= damage;
-            healthbar.value = health;
+            if (healthbar != null)
+            {
+                healthbar.value = health;
+            }
+            if (health <= 0)
+            {
+                gameOver.SetActive(true);
+                EnemyManager enemy = FindAnyObjectByType<EnemyManager>();
+                if (enemy != null)
+                {
+                    enemy.deadPlayerEnemy.AddDeathBody(transform.position);
+                }
+                Destroy(gameObject);
+            }
         }
     }
 }

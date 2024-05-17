@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BulletJam
+namespace BulletJam.Enemy
 {
     [CreateAssetMenu(fileName = "PlayerDeadEnemyData", menuName = "Scriptable/PlayerDeadData")]
     public class PlayerDeadEnemyData : ScriptableObject

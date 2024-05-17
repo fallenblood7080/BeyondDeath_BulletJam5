@@ -39,6 +39,7 @@ namespace BulletJam.Player
         private void Start()
         {
             cam = Camera.main;
+            health = GetComponent<PlayerHealth>();
         }
 
         private void Update()
@@ -79,7 +80,10 @@ namespace BulletJam.Player
             }
 
             weaponHeatEffectLight.intensity = weaponCurrentHeat;
-            heatUI.fillAmount = weaponCurrentHeat / weaponMaxHeat;
+            if (heatUI != null)
+            {
+                heatUI.fillAmount = weaponCurrentHeat / weaponMaxHeat;
+            }
 
             if (weaponCurrentHeat > weaponMaxHeat)
             {

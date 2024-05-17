@@ -26,13 +26,39 @@ namespace BulletJam.Core
 
             LoadingManager.CreateInstance();
             yield return StartCoroutine(LoadingManager.Instance.GetLoadingScreenObject());
+            LoadingManager.Instance.ShowLoadingScreen();
 
             yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/SceneContainer",
                 (data) => SceneContainer = data as SceneContainerScriptable));
             yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/PoolSettings",
                 (data) => PoolSetting = data as Pooler.PoolSettings));
 
-            yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.GameLevelScenes[0]));
+            yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.MainMenuScene));
+            LoadingManager.Instance.HideLoadingScreen();
+        }
+
+        public void Play(int index)
+        {
+            StartCoroutine(LoadGameScene(index));
+        }
+
+        public void MainMenu()
+        {
+            StartCoroutine(LoadMainMenu());
+        }
+
+        private IEnumerator LoadMainMenu()
+        {
+            LoadingManager.Instance.ShowLoadingScreen();
+            yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.MainMenuScene));
+            LoadingManager.Instance.HideLoadingScreen();
+        }
+
+        private IEnumerator LoadGameScene(int index)
+        {
+            LoadingManager.Instance.ShowLoadingScreen();
+            yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.GameLevelScenes[index]));
+            LoadingManager.Instance.HideLoadingScreen();
         }
     }
 }

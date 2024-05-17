@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02a927d8d4c3609428b1dd879df5943d, type: 3}
-  m_Name: SceneContainer
+  m_Script: {fileID: 11500000, guid: 404cb85e57c39ef45824b03ce2f481bd, type: 3}
+  m_Name: PlayerDeadEnemyData
   m_EditorClassIdentifier: 
-  <SplashScene>k__BackingField: SplashScreen
-  <MainMenuScene>k__BackingField: MainMenu
-  <GameLevelScenes>k__BackingField:
-  - GameScene
-  - Boss
+  playerDead: {fileID: 4858927386109648332, guid: af6b9fedd9758424893464799aff1ed6, type: 3}
+  deadPlayerPosition: []

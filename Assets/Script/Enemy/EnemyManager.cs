@@ -1,7 +1,9 @@
+using BulletJam.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BulletJam.Enemy
 {
@@ -9,16 +11,35 @@ namespace BulletJam.Enemy
     {
         [SerializeField] private Transform player;
         [SerializeField] private EnemySpawnData[] spawnDatas;
+        [SerializeField] private GameObject[] emenies;
+
+        public PlayerDeadEnemyData deadPlayerEnemy;
+
+        private void Start()
+        {
+            foreach (var pos in deadPlayerEnemy.deadPlayerPosition)
+            {
+                Instantiate(deadPlayerEnemy.playerDead, pos, Quaternion.identity);
+            }
+        }
 
         private void Update()
         {
             if (player == null)
                 return;
 
-            foreach (var spawnData in spawnDatas)
+            for (int j = 0; j < spawnDatas.Length; j++)
             {
+                EnemySpawnData spawnData = spawnDatas[j];
                 if (player.position.y > spawnData.spawn.position.y && !spawnData.isSpawned)
                 {
+                    foreach (var item in spawnData.points)
+                    {
+                        int i = Random.Range(minInclusive: 0, maxExclusive: emenies.Length);
+                        Instantiate(emenies[i], item.position, Quaternion.identity);
+                    }
+
+                    spawnData.isSpawned = true;
                     break;
                 }
             }
@@ -26,7 +47,7 @@ namespace BulletJam.Enemy
     }
 
     [Serializable]
-    public struct EnemySpawnData
+    public class EnemySpawnData
     {
         public Transform spawn;
         public bool isSpawned;
