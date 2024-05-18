@@ -10,7 +10,7 @@ namespace BulletJam.Pooler
         private SpriteRenderer spriteRenderer;
         private Collider2D col;
         private float damage;
-
+        private AudioSource audioSource;
         private ParticleSystem particle;
 
         private void Awake()
@@ -19,6 +19,7 @@ namespace BulletJam.Pooler
             spriteRenderer = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
             particle = GetComponentInChildren<ParticleSystem>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         public void Init(float force, float dmg, Vector2 dir, IObjectPool<PlayerBullet> pool)
@@ -31,11 +32,31 @@ namespace BulletJam.Pooler
 
             damage = dmg;
             bulletPool = pool;
+            audioSource.Play();
             rb.AddForce(dir * force, ForceMode2D.Impulse);
+            Invoke(nameof(DisappearBullet), 5f);
+        }
+
+        private void DisappearBullet()
+        {
+            spriteRenderer.enabled = false;
+            col.enabled = false;
+            if (!particle.isPlaying)
+            {
+                particle.Play();
+            }
+            LeanTween.delayedCall(1f, () =>
+            {
+                if (bulletPool != null && this != null)
+                {
+                    bulletPool.Release(this);
+                }
+            });
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            CancelInvoke();
             if (collision.collider.CompareTag("Enemy") || collision.collider.CompareTag("Boss"))
             {
                 if (collision.collider.TryGetComponent<IDamageable>(out var damageable))
@@ -49,7 +70,13 @@ namespace BulletJam.Pooler
             {
                 particle.Play();
             }
-            LeanTween.delayedCall(1f, () => bulletPool.Release(this));
+            LeanTween.delayedCall(1f, () =>
+            {
+                if (bulletPool != null && this != null)
+                {
+                    bulletPool.Release(this);
+                }
+            });
         }
     }
 }

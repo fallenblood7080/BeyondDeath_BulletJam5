@@ -1,5 +1,6 @@
+using BulletJam.Core;
+using BulletJam.Helper;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,9 @@ namespace BulletJam.Enemy
         [Space(5f)]
         [SerializeField] private GameObject gfx;
 
+        [SerializeField] private GameObject screamBody, normalBody;
+        [SerializeField] private GameObject[] mage;
+
         private int currentBossPointIndex;
 
         private float currentAttackInterval;
@@ -37,6 +41,7 @@ namespace BulletJam.Enemy
         private float currentHealth;
         private bool isBossActive;
         private bool isAttacking;
+        private bool isScreamed;
 
         private IEnumerator Start()
         {
@@ -67,7 +72,15 @@ namespace BulletJam.Enemy
             if (currentAttackInterval <= 0 && !isAttacking)
             {
                 currentAttackInterval = Random.Range(minAttackInterval, maxAttackInterval);
-                StartCoroutine(Attack());
+                if (currentHealth / maxHealth < 0.3 && !isScreamed)
+                {
+                    StartCoroutine(Scream());
+                    isScreamed = true;
+                }
+                else
+                {
+                    StartCoroutine(Attack());
+                }
             }
             else
             {
@@ -123,6 +136,25 @@ namespace BulletJam.Enemy
             isAttacking = false;
         }
 
+        private IEnumerator Scream()
+        {
+            normalBody.SetActive(false);
+            screamBody.SetActive(true);
+            CameraShake.instance.Shake(5f, 1f);
+            GetComponent<AudioSource>().Play();
+            yield return new WaitForSeconds(0.5f);
+            for (int i = 0; i < bossPoints.Length; i++)
+            {
+                if (i != currentBossPointIndex)
+                {
+                    Instantiate(mage[Random.Range(minInclusive: 0, maxExclusive: mage.Length)], bossPoints[i].position, Quaternion.identity);
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
+            normalBody.SetActive(true);
+            screamBody.SetActive(false);
+        }
+
         private IEnumerator SwitchPlace()
         {
             int randomIndex = Random.Range(minInclusive: 0, maxExclusive: bossPoints.Length);
@@ -175,6 +207,10 @@ namespace BulletJam.Enemy
         {
             currentHealth -= damage;
             healthBar.value = currentHealth;
+            if (currentHealth < 0)
+            {
+                GameManager.Instance.Play(2);
+            }
         }
     }
 }

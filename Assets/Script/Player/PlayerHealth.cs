@@ -1,6 +1,5 @@
 using BulletJam.Enemy;
-using System.Collections;
-using System.Collections.Generic;
+using BulletJam.Helper;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +11,11 @@ namespace BulletJam
         [SerializeField] private Slider healthbar;
         [SerializeField] private GameObject gameOver;
         private float health;
+        [SerializeField] private AudioSource source;
 
         private void Start()
         {
+            source = GetComponent<AudioSource>();
             health = maxHealth;
             if (healthbar != null)
             {
@@ -25,6 +26,11 @@ namespace BulletJam
 
         public void Damage(float damage)
         {
+            CameraShake.instance.Shake(5, 0.5f);
+            if (!source.isPlaying)
+            {
+                source.Play();
+            }
             health -= damage;
             if (healthbar != null)
             {

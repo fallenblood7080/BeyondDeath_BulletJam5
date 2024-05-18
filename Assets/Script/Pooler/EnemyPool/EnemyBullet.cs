@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -48,7 +46,13 @@ namespace BulletJam.Pooler
             {
                 particle.Play();
             }
-            LeanTween.delayedCall(1f, () => bulletPool.Release(this));
+            LeanTween.delayedCall(1f, () =>
+            {
+                if (bulletPool != null && this != null)
+                {
+                    bulletPool.Release(this);
+                }
+            });
         }
     }
 }

@@ -497,6 +497,7 @@ MonoBehaviour:
   weaponFireRate: 15
   attackCoolDown: 3
   rotationSpeed: 100
+  maxHealth: 500
 --- !u!1 &5130435398589592065
 GameObject:
   m_ObjectHideFlags: 0

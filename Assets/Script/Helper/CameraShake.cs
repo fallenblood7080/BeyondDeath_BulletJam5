@@ -1,5 +1,4 @@
 ﻿using Cinemachine;
-using System.Linq;
 using UnityEngine;
 
 namespace BulletJam.Helper

@@ -4,7 +4,9 @@ using UnitySingleton;
 
 namespace BulletJam.Core
 {
+    using BulletJam.Pooler;
     using Helper;
+    using UnityEngine.SceneManagement;
 
     public class GameManager : PersistentMonoSingleton<GameManager>
     {
@@ -33,8 +35,19 @@ namespace BulletJam.Core
             yield return StartCoroutine(HelperCoroutine.LoadDataFromResources("Scriptable/PoolSettings",
                 (data) => PoolSetting = data as Pooler.PoolSettings));
 
+            SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
+
             yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.MainMenuScene));
             LoadingManager.Instance.HideLoadingScreen();
+        }
+
+        private void SceneManager_sceneUnloaded(Scene arg0)
+        {
+        }
+
+        private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
         }
 
         public void Play(int index)
@@ -58,6 +71,8 @@ namespace BulletJam.Core
         {
             LoadingManager.Instance.ShowLoadingScreen();
             yield return StartCoroutine(HelperCoroutine.LoadGameScene(SceneContainer.GameLevelScenes[index]));
+            EnemyBulletPooler.CreateInstance();
+            PlayerBulletPooler.CreateInstance();
             LoadingManager.Instance.HideLoadingScreen();
         }
     }

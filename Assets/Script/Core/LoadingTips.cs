@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,7 +11,7 @@ namespace BulletJam
 
         private void OnEnable()
         {
-            loadingText.text = tips[(int)Random.Range(minInclusive: 0, maxInclusive: tips.Length - 1)];
+            loadingText.text = tips[(int)Random.Range(minInclusive: 0, maxExclusive: tips.Length)];
         }
     }
 }

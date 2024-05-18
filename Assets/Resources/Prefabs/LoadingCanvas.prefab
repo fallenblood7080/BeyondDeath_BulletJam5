@@ -474,7 +474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tips:
-  - Continuous firing has consequences...
+  - Don't Fire Unnecessarily or face Consequence
   - Dead has Consequences.....
-  - Overheating has Consequences...
+  - Sometimes, when an enemy die or switch places, it drops white mark, don't dare
+    to touch it or face consequence..
   loadingText: {fileID: 4993228817536937338}

@@ -1,8 +1,5 @@
 using BulletJam.Player;
 using BulletJam.Pooler;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BulletJam.Enemy
@@ -32,6 +29,7 @@ namespace BulletJam.Enemy
         private void Start()
         {
             target = FindAnyObjectByType<AimAndFire>().transform;
+            currentHealth = maxHealth;
         }
 
         private void Update()
@@ -79,7 +77,7 @@ namespace BulletJam.Enemy
 
         private void Fire(Vector2 dir)
         {
-            PlayerBulletPooler.Instance.Get(bulletForce, bulletDamage, dir.normalized, firingPoint[UnityEngine.Random.Range(minInclusive: 0, maxExclusive: firingPoint.Length)].position);
+            EnemyBulletPooler.Instance.Get(bulletForce, bulletDamage, dir.normalized, firingPoint[UnityEngine.Random.Range(minInclusive: 0, maxExclusive: firingPoint.Length)].position);
         }
 
         private void OnDrawGizmosSelected()
