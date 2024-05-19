@@ -187,7 +187,10 @@ namespace BulletJam.Enemy
             {
                 LeanTween.value(1, 0, 0.4f).setOnUpdate((float val) =>
                 {
-                    part.color = new Color(1, 1, 1, val);
+                    if (part != null)
+                    {
+                        part.color = new Color(1, 1, 1, val);
+                    }
                 });
             }
         }
@@ -198,7 +201,10 @@ namespace BulletJam.Enemy
             {
                 LeanTween.value(0, 1, 0.4f).setOnUpdate((float val) =>
                 {
-                    part.color = new Color(1, 1, 1, val);
+                    if (part != null)
+                    {
+                        part.color = new Color(1, 1, 1, val);
+                    }
                 });
             }
         }

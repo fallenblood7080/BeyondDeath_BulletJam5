@@ -494,10 +494,10 @@ MonoBehaviour:
   - {fileID: 1849057438781144298}
   bulletForce: 9
   bulletDamage: 10
-  weaponFireRate: 15
+  weaponFireRate: 12
   attackCoolDown: 3
   rotationSpeed: 100
-  maxHealth: 500
+  maxHealth: 400
 --- !u!1 &5130435398589592065
 GameObject:
   m_ObjectHideFlags: 0

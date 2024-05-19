@@ -593,7 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   attackPoint: {fileID: 8566326057876209326}
-  maxHealth: 300
+  maxHealth: 250
   attackInterval: 2
   force: 14
   dmg: 10

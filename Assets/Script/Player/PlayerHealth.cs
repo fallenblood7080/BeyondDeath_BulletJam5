@@ -38,6 +38,7 @@ namespace BulletJam
             }
             if (health <= 0)
             {
+		Cursor.visible = true;
                 gameOver.SetActive(true);
                 EnemyManager enemy = FindAnyObjectByType<EnemyManager>();
                 if (enemy != null)

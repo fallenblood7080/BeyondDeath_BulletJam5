@@ -39,7 +39,10 @@ namespace BulletJam.Enemy
             {
                 foreach (var part in bodyParts)
                 {
-                    part.color = new Color(1, 1, 1, val);
+                    if (part != null)
+                    {
+                        part.color = new Color(1, 1, 1, val);
+                    }
                 }
             }).setOnComplete(() =>
             {

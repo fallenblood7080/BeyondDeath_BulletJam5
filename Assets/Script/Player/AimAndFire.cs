@@ -28,6 +28,8 @@ namespace BulletJam.Player
         [SerializeField] private float weaponCoolMultiplier;
         [SerializeField, EndGroup] private float fireRate;
 
+        [SerializeField] private Transform crosshair;
+
         private PlayerHealth health;
 
         private float currentWeaponCooldown;
@@ -40,11 +42,13 @@ namespace BulletJam.Player
         {
             cam = Camera.main;
             health = GetComponent<PlayerHealth>();
+            Cursor.visible = false;
         }
 
         private void Update()
         {
             Vector2 mousePosInWorld = cam.ScreenToWorldPoint(InputManager.Instance.LookInputs);
+            crosshair.position = mousePosInWorld;
             Vector2 dir = mousePosInWorld - (Vector2)transform.position;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + offset;
             weaponHolder.rotation = Quaternion.Euler(0f, 0f, angle);
